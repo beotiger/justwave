@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>JustWave Player: audio waveform generating player</title>
+	<link rel="shortcut icon" href="posters/favicon64.ico">
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="js/justwave.player.js"></script>
+	<link type="text/css" rel="stylesheet" href="css/justwave.player.css">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<link type="text/css" rel="stylesheet" href="css/styles.css">
+	
+	<script>
+		// Note: we will wrapper audio with justwave class only
+		// so the last one without this class but with controls will be untouched
+		// by $.justwave()
+		// If we call $.justwave() without parameters
+		// all audio elements will be injected by justwave player
+		$(document).ready( function() {
+			$.justwave({ chained: 1 });
+			$('span.label').click(function() {
+				$(this).next().toggle();
+			}).next().hide();
+			
+		});
+	</script>
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">JustWave</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">JustWave Player</a></li>
+            <li><a href="demo1.php">Demo 1</a></li>
+            <li><a href="demo2.php">Demo 2</a></li>
+						<li><a href="test.php">Test</a></li>
+						<li><a href="license.html">License</a></li>
+						<li><a href="download.html">Download</a></li>
+						<li><a href="http://beotiger.com">beotiger.com</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+	<div class="container">
+		
+		<h1>Welcome to JustWave Player!</h1>
+		
+		<h2>KirillTV - Always</h2>
+		<p id="home-player">
+			<audio data-wave_color="#3F87BE" data-prog_color="#10EFAD" width="520" height="100" data-buttoncolor="#337AB7">
+				<source src="media/KirillTV - Always.mp3" type="audio/mpeg">
+				<source src="media/KirillTV - Always.ogg" type="audio/ogg">
+			</audio>
+		</p>
+
+		<h2>Description</h2>
+			
+		<p>JustWave Player is JavaScript audio player based on <a href="index.html"><b>JustWave.class.php</b></a>.</p>
+
+		<p>This is jQuery plugin for generating waveform images of audio and making interactive player on them. Waveform images are generated on the server side by the script <b>JustWave.class.php</b>. Caching mechanism is used by default so that wave images with the same name, dimensions and colors will be generated only once.</p>
+
+		<h2>View demos and test player</h2>
+		<p>See:<br>
+			<a href="demo1.php">Demo 1</a> - several players on the page<br>
+			<a href="demo2.php">Demo 2</a> - player with playlist. <b>Warning</b>: starts automatically and loop through playlist<br>
+			<a href="test.php">Test</a> - test single player with almost any parameters and see output results<br>
+		</p>
+
+		<h2>Usage:</h2>
+		<p>Download <i>justwave.zip</i> or <i>justwave.tgz</i> from <a href="download.html">Download page</a> and unpack it into your web project.</p>
+		
+		<p>Include <i>justwave.player.css</i> somewhere at the head of HTML page and <i>justwave.player-min.js</i> somewhere after including jQuery library:</p>
+		<code>
+		&lt;!-- include jQuery library --&gt;<br>
+		&lt;script src=&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js&quot;&gt;&lt;/script&gt;
+		<br><br>
+		&lt;!-- include JustWave Player css and js files --&gt;<br>
+		&lt;link type=&quot;text/css&quot; rel=&quot;stylesheet&quot; href=&quot;justwave.player.css&quot;&gt;<br>
+		&lt;script src=&quot;justwave.player-min.js&quot;&gt;&lt;/script&gt;<br>
+		</code>
+
+		<br>
+		<p>Then when document is ready (in <i>DOMContentLoaded</i> or <i>$(document).ready()</i> event handlers) write:</p>
+
+		<p><b>$.justwave(</b>[ [<i>options</i>,] <i>class</i> ]<b>)</b></p>
+
+		<h2>options</h2>
+		<p>Map (object) of options which can contain the following properties (if default value is blank the option is not set by default):</p>
+
+		<table class="table">
+			<tr><th>Property</th><th>Default value</th><th>Description</th></tr>
+		 <tr><th>ajax</th><td>'justwave.ajax.php'</td><td>Server side script for AJAX requests that generate waveforms and attach them to the player(s).</td></tr>
+		 <tr><th>width</th><td>500</td><td>Width of player in pixels.</td></tr>
+		 <tr><th>height</th><td>100</td><td>Height of player in pixels.</td></tr>
+		 <tr><th>poster</th><td>&nbsp;</td><td>Poster image as background.</td></tr>
+		 <tr><th>wave_color</th><td>'#909296'</td><td>Color of foreground wave.</td></tr>
+		 <tr><th>prog_color</th><td>'#FF530D'</td><td>Color of background wave (progress wave).</td></tr>
+		 <tr><th>back_color</th><td></td><td>Color of player's background. If not set or an empty string - transparent then.<br>
+						 <b>Note</b>: we can set any picture as background to <em>justwave-wrapper</em> class in <b>justwave.player.css</b> file for example</br>
+						 or through <i>poster</i> option or attribute of DOM audio element.</td></tr>
+		 <tr><th>mode</th><td>'dataurl'</td><td>Mode file|dataurl.</td></tr>
+		 <tr><th>type</th><td>'png'</td><td>Type of waves' images png|gif|jpg.</td></tr>
+		 <tr><th>wavedir</th><td>'waves/'</td><td>Directory in filesystem for storing waveform images.<br>
+							<b>Note 1</b>: This directory is also used for temporary files during conversion process and should be writable.<br>
+							<b>Note 2</b>: On Windows' systems always use '/' in path instead of '\'.</td></tr>
+		 <tr><th>buttoncolor</th><td>'#A47655'</td><td>Color of play/pause button background, inners are always white.</td></tr>
+		 <tr><th>buttonsize</th><td></td><td>Size of play/pause in pixels, if 0 or not set - its size is 50% of the height of the player, but not more than 88 pixels.</td></tr>
+		 <tr><th>showname</th><td>1</td><td>Display the name of the audio when playback started or while mouse hovering (1 - yes, 0 - no).</td></tr>
+		 <tr><th>namesize</th><td>15</td><td>Size of the name of the audio, in pixels.</td></tr>
+		 <tr><th>showtimes</th><td>1</td><td>Show time leds on the player surface (1 - yes, 0 - no).</td></tr>
+		</table>
+
+		<h4>Example:<br>
+		<code><br>
+ 		$(document).ready( function() {<br>
+			&nbsp;&nbsp;$.justwave({ showname: 0, buttoncolor: '#337AB7' });<br>
+		});<br>
+		</code><br>
+		</h4>
+		
+		<div class="alert alert-warning" role="alert">
+			All colors should be in <b>#RGB</b> or <b>#RRGGBB</b> format, one or two hex-digit(s) for red, green and blue colors.<br>
+			We can not use such values as 'white' or 'rgb(32,255,128)'. Hash sign (#) is optional.
+		</div>
+		
+		<h2>Extra options</h2>
+		<p>
+			<b>Note</b>: extra options are not set by default (see also more descriptions below).
+		</p>
+		
+		<table class="table">
+		 <tr><th>force</th><td>Do not seek for waveform images in file system.</td></tr>
+		 <tr><th>nocache</th><td>Do not use caching mechanism (why?)</td></tr>
+		 <tr><th>twopass</th><td>Use two pass conversion for normalization.<br>
+					If waveforms are in cache or in file system this option does not take effect if we don't use <i>nocache</i> and <i>force</i> options.</td></tr>
+		 <tr><th>chained</th><td>Chain players so that when one starts playing all others are paused.<br>
+			 <b>Note</b>: there may be chained and not chained justwave players on one page,<br>
+				and chaining mode applies to chained players only.<br>
+			 We can use <i>data-chained</i> attribute to distinct audio elements that should be chained.<br>
+			 Default behavior: not chained, all players can play simultaneously.</td></tr>
+		 <tr><th>nowaves</th><td>If set - do not generate waves, show only backgrounds in player.<br>
+									<b>Caution</b>: experimental feature, use with care.</td></tr>
+		</table>	 
+
+		<p>
+			If <i>extra option</i> is not set, default behavior will be used, which means:<br><br>
+			If waves are in cache they will be fetched from there.<br>
+			If waves were created previously in file system (and are in a <i>wavedir</i> directory) they will be fetched from there then.<br>
+			Otherwise audio will be converted to WAV format temporally (using <b>ffmpeg</b> external binary) and new waveform images will be created.<br>
+			In <i>file</i> mode these images (or one image if <i>wave_color</i> = <i>prog_color</i>) will be stored in <i>wavedir</i> directory and we get links to them in <i>waveurl</i> and <i>progressurl</i> JSON-parameters, otherwise we get data-url in <i>waveurl</i> and <i>progressurl</i> JSON-parameters and can use it as image sources.<br>
+			If audio <i>src</i> is a url it will be temporally downloaded and converted as usual audio.
+		</p>
+			
+		 <p>Options <b>width</b>, <b>height</b> and <b>poster</b> can be set for any audio element individually through the corresponding attributes, for example:<br>
+		 <code>
+				&lt;audio width=&quot;600&quot; height=&quot;369&quot; poster=&quot;posters/hank.jpg&quot; src=&quot;media/Queens of Dogtown - I Remember You[demo].mp3&quot;&gt;&lt;/audio&gt;
+		 </code>
+		 <br>
+		 Yes, our audio elements can now have width, height and poster attributes - that's what we've been dreaming about for a long time, haven't we?
+		 </p>
+		 
+		 <p>All options can be set through `<b>data-</b>` attributes of audio element,
+			for example: <br>
+			<code>
+			&lt;audio src=&quot;my_audio.mp3&quot; data-chained=&quot;1&quot; data-mode=&quot;file&quot; data-wave_color=&quot;#3F87BE&quot; data-prog_color=&quot;#2A75AD&quot; data-buttoncolor=&quot;#00A588&quot; data-showname=&quot;0&quot; width=&quot;350&quot; height=&quot;100&quot;&gt;&lt;/audio&gt;
+			</code>
+		</p>
+		 
+		<h2>class</h2>
+		<p>
+		HTML class name to filter injected players. If not set all audio elements on the page will be injected by JustWave Player.
+		</p>
+		
+		<h4>Example:<br>
+		<code><br>
+ 		$(document).ready( function() {<br>
+			// inject players to audio elements<br>
+			// if they have <i>justwave</i> class name only<br>
+			&nbsp;&nbsp;$.justwave('justwave');<br>
+		});<br>
+		</code><br>
+		</h4>
+
+		<p>
+			We respect <i>preload</i>, <i>autoplay</i> and <i>loop</i> attributes as much as they are respected by the browser.<br>
+			If you want to control justwaved audio element target it by your JavaScript code and do what you need.
+		</p>
+		
+		<div class="alert alert-danger" role="alert">
+			Do not use <i>controls</i> attribute for audio element that meant to be justwaved.
+		</div>
+
+		<p>
+			<b>Note</b>: any option of the player can be changed dynamically before loading new <i>src</i> in audio element through <b>audio.opts</b> object where audio is an audio JavaScript DOM element.<br>
+			<b>E.g.</b>:<br>
+			<code>
+			var audio = $(&#39;audio&#39;)[0];<br>
+			&nbsp;&nbsp;audio.opts.width = 400;<br>
+			&nbsp;&nbsp;audio.opts.wave_color = '#33C088';<br>
+			&nbsp;&nbsp;audio.opts.poster = &#39;new-poster.png&#39;;<br>
+			&nbsp;$(audio).attr(&#39;src&#39;, &#39;new_song.mp3&#39;);
+			</code>
+		</p>
+		
+		<div class="alert alert-danger" role="alert">
+			<strong>Warning!</strong> Not all browsers understand <b>mp3</b> audio format. For example <em>Opera</em> version 12.17 won't play any <b>mp3</b> audio, but does play <b>ogg</b> audio. For such cases you can use several <em>source</em> elements inside single <em>audio</em> element to target <b>mp3</b> and <b>ogg</b> file types. See player's code below as a primer of this technique.
+		</div>
+
+		<h3>And we wish you best luck and nice time!<br>
+			<audio data-wave_color="#3232C8" data-prog_color="#3232C8" data-back_color="#C0C0C0" width="700" height="90" data-showtimes="0" data-showname="0" data-buttoncolor="#337AB7">
+				<source src="media/We Wish You.ogg" type="audio/ogg">
+				<source src="media/We Wish You.mp3" type="audio/mpeg">
+			</audio>
+		<span class="label label-primary">Show player's code</span>
+		<code>
+			&lt;audio data-wave_color=&quot;#3232C8&quot; data-prog_color=&quot;#3232C8&quot; data-back_color=&quot;#C0C0C0&quot; width=&quot;700&quot; height=&quot;90&quot; data-showtimes=&quot;0&quot; data-showname=&quot;0&quot; data-buttoncolor=&quot;#337AB7&quot;&gt;<br>
+				&nbsp;&nbsp;&lt;source src=&quot;media/We Wish You.ogg&quot; type=&quot;audio/ogg&quot;&gt;<br>
+				&nbsp;&nbsp;&lt;source src=&quot;media/We Wish You.mp3&quot; type=&quot;audio/mpeg&quot;&gt;<br>
+			&lt;/audio&gt;<br>
+		</code>
+		</h3>
+		
+		<div class="well">
+				(c) beotiger Andrey Tzar 2015 AD http://justwave.beotiger.com	https://github.com/beotiger	email: beotiger@gmail.com
+		</div>	
+		
+</div>
+</body>
+</html>

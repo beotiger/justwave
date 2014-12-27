@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>JustWave Project</title>
+	<link rel="shortcut icon" href="posters/favicon64.ico">
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="js/justwave.player.js"></script>
+	<link type="text/css" rel="stylesheet" href="css/justwave.player.css">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<link type="text/css" rel="stylesheet" href="css/styles.css">
+	
+	<script src="js/demo2.js"></script>
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="active navbar-brand" href="#">JustWave</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="player.html">JustWave Player</a></li>
+            <li><a href="demo1.php">Demo 1</a></li>
+            <li><a href="demo2.php">Demo 2</a></li>
+						<li><a href="test.php">Test</a></li>
+						<li><a href="license.html">License</a></li>
+						<li><a href="download.html">Download</a></li>
+						<li><a href="http://beotiger.com">beotiger.com</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+   </nav>
+
+  <div class="container">
+
+		<h1>Welcome to JustWave Project</h1>
+		<h2>Create PNG waveform of audio (mp3/ogg) and use it in Web applications</h2>
+		
+		<p>JustWave tries to make it easy to create and use waveforms of different audios for your Web applications.
+		It can create waveform for any audio (or even video) that <b>ffmpeg</b> can accept but aimed primarily to mp3 and ogg audio for they are most suitable for browsers.
+		
+		To use it you should create an instance of JustWave class and call method <i>create</i> with path or url to an audio as a single parameter.
+		
+		All additional parameters passed through constructor method as a link to external array (POST/GET/ARGV etc. - see below).
+		</p>
+		
+		<p>
+		JustWave Project consists of several server- and client-side scripts and aimed to create waveforms of audio  - ogg/mp3, any - for interactive players as an example.<br><br>
+		
+		The main script is server-side script <em>JustWave.class.php</em>. It uses <b>ffmpeg</b> system binary as a back-end for converting audio to WAV (PCM) format in order to create peaks of waveform.<br><br>
+		
+		There are two server-side scripts based on it - <a href="#ajax"><em>justwave.ajax.php</em></a> and <a href="#cli"><em>justwave.cli.php</em></a>.<br><br>
+		
+		<a href="player.html"><i>justwave.player.js</i></a> has been made to create and control waveforms of audio elements for HTML pages and uses <em>justwave.ajax.php</em> server-side script as a back-end for creating PNG-waveforms.
+		</p>
+		
+		<h2>JustWave.class.php</h2>
+		<p>
+			Parameters source can be passed in construction method and is a super-global <b>$_POST</b> array by default. You can use <i>POST</i>, <i>GET</i>, <i>REQUEST</i>, <i>COOKIE</i>, <i>SESSION</i> or <i>ARGV</i> constants. When <i>ARGV</i> constant used you should pass an array with '<b>option=value</b>' string values as a second parameter (see <a href="#cli">justwave.cli.php</a> description below).<br>
+			All possible parameters are described for <a href="#ajax">justwave.ajax.php</a> script.
+		</p>
+		
+		<h3>Usage of this class (PHP native code):<br>
+		<code><br>
+			require_once 'JustWave.class.php';<br><br>
+			
+			// we accept parameters as GET data<br>
+			// e.g.: script.php?mode=file&amp;wave_color=F00&amp;prog_color=F00&amp;back_color=0F0<br>
+			$justwave = new JustWave('GET');<br>
+			// create waveform image(s)<br>
+			$justwave->create('my_song.mp3');<br>
+			if($justwave->status == 'ok') {<br>
+				&nbsp;&nbsp;echo 'Duration of my_song.mp3 = ' . $justwave->duration . '&lt;br&gt;';<br>
+				&nbsp;&nbsp;echo 'See waveform image under the link: &lt;a href=&quot;' . $justwave-&gt;dataUrlWave . '&quot;&gt;waveform&lt;/a&gt;';<br>
+			}<br>
+			else<br>
+				&nbsp;&nbsp;echo 'Failed! Message = ' . $justwave->message;<br>
+		</code>
+		</h3>
+		<p>
+			See working script made of this example: <a href="script.php">working example</a>.
+		</p>
+		
+		<p>After calling <b>create</b> method following public properties will be initialized:</p>
+		 <ul class="list-group">
+		 <li class="list-group-item"><i>status</i> - Status, string: ok or err.</li>
+			<li class="list-group-item"><i>message</i> - String message describing status result more thoroughly.</li>
+			<li class="list-group-item"><i>duration</i> - Duration of audio in seconds (fixed value).</li>
+			<li class="list-group-item"><i>url</i> - Url or path to the audio (such as input parameter).</li>
+			<li class="list-group-item"><i>key</i> - MD5 key of audio url, waveform dimensions and colors.</li>
+			<li class="list-group-item"><i>audio</i> - Base name of the audio.</li>
+			<li class="list-group-item"><i>dataUrlWave</i> - Image src or data-url of main wave.</li>
+			<li class="list-group-item"><i>dataUrlProgress</i> - Image src or data-url of progress wave.</li>
+		 </ul>
+		 
+		<p>
+			In <i>file</i> mode there are two PNG waveform images that will be generated in the <i>wavedir</i> directory on the server, <b>$this-&gt;md5</b>.png and <b>$this-&gt;md5</b>_bg.png. If <i>wave_color</i> = <i>prog_color</i> the image will be only one (<b>$this-&gt;md5</b>.png).<br>			
+			<b>$this-&gt;dataUrlWave</b> and <b>$this-&gt;dataUrlProgress</b> will hold relative links to these waveform PNG images.<br><br>
+			
+			In <i>dataurl</i> mode these two properties will hold data-url of PNG images in themselves. If <i>wave_color</i> = <i>prog_color</i> <b>$this-&gt;dataUrlProgress</b> will be null.
+		</p>
+		
+		<div class="alert alert-warning" role="alert">
+		If you get permanent error <b>Conversion failed</b> it seems that your server (on which you host your site) does not have <em>ffmpeg</em> binary installed. You can install it from sources (see page <i>http://ffmpeg.org/download.html</i>) or use generic static builds (e.g. from <i>http://johnvansickle.com/ffmpeg/</i>).<br>
+		If <b>ffmpeg</b> binary has not been installed in system path yet you should point at it through <strong>FFMPEG_PATH</strong> constant in <em>JustWave.class.php</em> file.
+		<br><br>
+		<b>Note</b>: for some Debian/Ubuntu systems you can try to use <em>avconv</em> binary instead of <em>ffmpeg</em> which has almost the same parameter's syntax.
+		</div>
+		
+		<h2 id="ajax">justwave.ajax.php</h2>
+		It accepts <b>POST</b> data from client side (JavaScript) and returns JSON data with waveforms of required audio. You can set colors for foreground and background (progress) waveform and get two separate images of the waveforms differ in colors. If foreground and background colors are the same there will be only one waveform. In this context <i>progress</i> means the progress of playhead during audio playing.
+		</p>
+		
+		<h3>The possible <b>POST</b> data is as following:</h3>
+		
+		<div class="alert alert-warning" role="alert">
+			If default value is blank the option is not set by default
+		</div>
+		
+		<table class="table">
+			<tr><th>Key</th><th>Default value</th><th>Description</th></tr>
+			<tr><th>audio</th><td><b>*REQUIRED*</b></td><td>Url or path to the audio file (mp3/ogg or any audio format which <b>ffmpeg</b> understands - and it understands really much if not all). If it is a path look for it is accessible in the working directory of <b>justwave.ajax.php</b> - it is not a problem if your HTML page with mp3/ogg links is in the same directory. If it is a url it will be downloaded to <i>wavedir</i> directory temporarily if it is not found in cache or file system.</td></tr>
+			<tr><th>mode</th><td>'dataurl'</td><td>String '<i>dataurl</i>' or '<i>file</i>'. Set returning mode of the images in data-url or link to sources in file system.</td></tr>		
+			<tr><th>wavedir</th><td>'waves/'</td><td>Directory in file system for storing waveform images.<br>
+							<b>Note 1</b>: This directory is also used for temporary files during conversion process and should be writable.<br>
+							<b>Note 2</b>: On Windows' systems always use '/' in path instead of '\'.</td></tr>
+		 <tr><th>width</th><td>500</td><td>Width of waveform image(s) in pixels.</td></tr>
+		 <tr><th>height</th><td>100</td><td>Height of waveform image(s) in pixels.</td></tr>
+		 <tr><th>wave_color</th><td>'#909296'</td><td>Color of foreground waveform image.</td></tr>
+		 <tr><th>prog_color</th><td>'#FF530D'</td><td>Color of background (progress) waveform image.</td></tr>
+		 <tr><th>back_color</th><td></td><td>Color of background for the waveform image(s). If not set or an empty string - transparent then.</td></tr>
+		 <tr><th colspan="3"><h3>Extra options</h3></th></tr>
+		 <tr><th>force</th><td>&nbsp;</td><td>Do not seek for waveform images in file system<sup>*</sup>.</td></tr>
+		 <tr><th>nocache</th><td>&nbsp;</td><td>Do not use caching mechanism (why?)<sup>*</sup></td></tr>
+		 <tr><th>twopass</th><td>&nbsp;</td><td>Use two pass conversion for normalization<sup>*</sup>.<br>
+					If waveforms are in cache or in file system this option does not take effect if you don't use <i>nocache</i> and <i>force</i> options.</td></tr>
+		</table>			
+		
+		<div class="alert alert-danger" role="alert">
+		Only <b>audio</b> data parameter is required, others can fall back to their default values which are suitable for most common situations.
+		</div>
+		
+		<p>
+			<sup>*</sup>If <i>extra options</i> are not set, default behavior will be used:<br><br>
+			If waves are in cache they will be fetched from there.<br>
+			If waves were created previously in file system (and are in a <i>wavedir</i> directory) they will be fetched from there then.<br>
+			Otherwise audio will be converted to WAV format temporally (using <b>ffmpeg</b> external binary) and new waveform images will be created.<br>
+			In <i>file</i> mode these images (or one image if <i>wave_color</i> = <i>prog_color</i>) will be stored in <i>wavedir</i> directory and you get links to them in <i>waveurl</i> and <i>progressurl</i> JSON-parameters, otherwise you get data-url in <i>waveurl</i> and <i>progressurl</i> JSON-parameters and can use it as image sources.<br>
+			If audio <i>src</i> is a url it will be temporally downloaded and converted as usual audio.
+		</p>
+		
+		<h3>The returning data in JSON format</h3>
+		<table class="table">
+		 <tr><th>status</th><td>Status of returning, strings <i>ok</i> or <i>err</i> only. <i>ok</i> means waveforms are ready to be used, <i>err</i> - something went wrong.</td></tr>
+		 <tr><th>message</th><td>Message describing returning result or error cause more specifically.
+		 <ul class="list-group">
+		 <li class="list-group-item"><i>In cache</i> - the waveform data has been fetched from cache.</li>
+			<li class="list-group-item"><i>Images exist</i> - waveforms images are located in file system.</li>
+			<li class="list-group-item"><i>New wave(s) created</i> - new waveforms has been drawn and are ready.</li>
+			<li class="list-group-item"><i>Conversion failed</i> - something went wrong in conversion process.</li>
+			<li class="list-group-item"><i>Downloading failed</i> - url could not be downloaded for some reason.</li>
+		 </ul></td></tr>
+		 <tr><th>duration</th><td>Duration of the audio in seconds (fixed value). Some browsers may fail defining real duration parameter for some CBR mp3 and this can somehow help.</td></tr>
+		 <tr><th>key</th><td>MD5 key composed from audio url (path) + waveform width and height + colors of waveforms. </td></tr>
+		 <tr><th>name</th><td>Base name of the audio</td></tr>
+		 <tr><th>waveurl</th><td>Src for main wave (consists either of data-url of PNG-image or a link to external PNG-image location)</td></tr>
+		 <tr><th>progressurl</th><td>The same for the progress (second background) wave. For <i>dataurl</i> mode it is defined when <i>wave_color</i> &lt;&gt; <i>prog_color</i> only. In <i>file</i> mode it can be the same as <i>waveurl</i> when these colors are the same.</td></tr>
+		</table>	 
+		
+		<h2 id="cli">justwave.cli.php</h2>
+		<p>This script should be used in command-line mode and can generate waveforms for multiple audio sources simultaneously.<br>
+		Parameters for this script are in a <i>option=value</i> format and are almost the same as for <b>justwave.ajax.php</b> script in its POST data.<br>
+		Run this script without parameters to see help screen.</p>
+		
+
+		<h3>Usage:<br>
+			<code>$ php justwave.cli.php mask [ options ]</code>
+		</h3>
+		
+		<div class="alert alert-danger" role="alert">
+		<b>Warning</b>: path to <b>php</b> executable should be in your <em>PATH</em> environment variable.
+		</div>
+		
+		<p>
+			<b>mask</b> - filename or pattern for media, e.g.: <i>song.mp3</i> or <i>*.ogg</i><br>
+				<br>
+			<b>options</b> - optional parameter(s), in <em>option=value</em> format, for example:<br>
+				<code>$ php justwave.cli.php ../my_mp3_dir/*.mp3 width=450 height=75 wave_color=#3F87BE back_color=#FFFFFF</code><br>
+			<br>
+			<b>Possible options are</b>: (shown their default values):<br>
+				<i>width</i>=500 - width of the wave image (in pixels).<br>
+				<i>height</i>=100 - height of the wave image (in pixels).<br>
+				<i>wave_color</i>=#909296 - color of foreground wave in #RRGGBB format.<br>
+				<i>back_color</i>= - color of background in #RRGGBB format.<br>
+					If not set or is empty - transparent then.<br>
+				<i>wavedir</i>=waves - directory in file system for storing waveform image(s).<br>
+					<b>Note 1</b>: This directory is also used for temporary files<br>
+					during conversion process and should be writable.<br>
+					<b>Note 2</b>: On Windows' systems always use '/' in path instead of '\'.<br>
+													<br>
+			<b>Extra options</b>:<br>
+				<i>force</i>=1 - do not seek for wave image in file system.<br>
+				<i>nocache</i>=1 - do not use caching mechanism (why?)<br>
+				<i>twopass</i>=1 - use two pass conversion for normalization.<br>
+		</p>
+		
+		<div class="alert alert-warning" role="alert">
+		About these extra options see above in description of <a href="#ajax"><i>justwave.ajax.php</i></a>
+		</div>
+		
+		<div class="alert alert-danger" role="alert">
+		You can pass any parameters to the script but <b>mode=file</b> and <b>prog_color=wave_color</b> will be forced in order to generate only one waveform per audio as a file in specified directory (not as data-url).<br>
+		String parameters do not require quote signs. Spaces in between equal sign (=) are not allowed.
+		</div>
+
+		<div class="well">
+				(c) beotiger Andrey Tzar 2015 AD http://justwave.beotiger.com	https://github.com/beotiger	email: beotiger@gmail.com
+		</div>	
+		
+	</div><!-- //.container -->
+	
+
+</body>
+</html>

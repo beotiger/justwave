@@ -1,0 +1,129 @@
+.justwave_wrapper
+{
+	position: relative;
+	width: 450px;
+	height: 75px;
+	border: 1px solid black;
+	cursor: text;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	box-sizing: content-box;
+	font-family: Geneva, Arial, Verdana, sans-serif;
+}
+
+.justwave_wrapper * {
+    -khtml-user-select: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+		box-sizing: content-box;
+}
+
+.justwave_wave, .justwave_playhead, .justwave_progress
+{
+	position: absolute;
+	width: 450px;
+	height: 100%;
+	left: 0;
+	top: 0;
+	cursor: text;
+}
+
+.justwave_wave
+{
+	z-index: 1;
+}
+
+.justwave_playhead
+{
+	z-index: 2;
+	width: 0;
+	overflow: hidden;
+	border-right: solid 1px #333;
+}
+
+.justwave_duration, .justwave_curpos, .justwave_curfocus {
+	position: absolute;
+	background: rgba(0,0,0,.9);
+	padding: 0 2px;
+	font-size: 10px;
+	line-height: 14px;
+	z-index: 3;
+	display: none;
+}
+
+.justwave_duration
+{
+	right: 0;
+	bottom: 0;
+	color: white;
+	border-top-left-radius: 3px;
+}
+
+.justwave_curpos
+{
+/*	color: #F50; */
+	color: white;
+	border-bottom-left-radius: 3px;
+	right: 0;
+	top: 0;
+}
+
+.justwave_curfocus
+{
+	color: #999;
+}
+
+.justwave_songname
+{
+	position: absolute;
+	right: 0;
+	top: 2px;
+	color: white;
+	background: rgba(0, 0, 0, 0.33);
+	font-size: 16px;
+	padding: 1px;
+	z-index: 3;
+	display: none;
+}
+
+/* play button */
+.justwave_wrapper button.justwave_playpause
+{
+	position: absolute;
+	left: 2px;
+	bottom: 2px;
+	
+	width: 44px;
+	height: 44px;
+
+	border: none;
+
+	margin: 0;
+	padding: 0;
+	
+	background: transparent;
+	cursor: pointer;
+	padding: 1px;
+	z-index: 3;
+	display: none;
+}
+
+.justwave_wrapper button.justwave_playpause:focus
+{
+	outline:none;
+}
+
+.justwave_wrapper button.justwave_playpause:disabled,
+.justwave_wrapper button.justwave_playpause.disabled
+{
+	opacity:.4;
+}
+
+.justwave_wrapper button.justwave_playpause .justwave_pause,
+.justwave_wrapper button.justwave_playpause .justwave_play
+{
+	display: none;
+}

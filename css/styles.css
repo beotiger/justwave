@@ -1,0 +1,110 @@
+body
+{
+	padding-top: 50px;
+}
+
+.center-template {
+	padding: 40px 15px;
+	text-align: center;
+}
+
+span.label
+{
+	width:200px;
+	display:block;
+	margin-top :10px;
+	cursor:pointer;
+}
+
+.songs li:hover
+{
+	cursor: pointer; 
+}
+
+.clear
+{
+	clear: left !important;
+}
+
+h3 code
+{
+	font-size: 16px;
+}
+
+#songs-list div,
+#songs-list > ol
+{
+	float: left;
+}
+
+#songs-list > ol
+{
+	max-width: 400px;
+	margin-right: 25px;
+}
+
+#songs-list > ol.test
+{
+	max-height: 200px;
+	overflow-y: auto;
+}
+
+fieldset
+{
+	max-width: 600px;
+	margin: 10px;
+}
+
+legend
+{
+/*	margin: 8px 5px;
+	padding: 0;*/
+	font-size: 20px;
+	font-weight: bold;
+}
+
+#output input,
+#output textarea
+{
+	width: 330px;
+}
+
+fieldset#params
+{
+/*	max-height: 400px;
+	overflow-y: auto;*/
+}
+
+fieldset#demo3-datasent
+{
+	min-width: 250px;
+}
+
+table.test tr td
+{
+	vertical-align: top;
+}
+
+table.test tr th
+{
+	vertical-align: top;
+	text-align: right;
+	padding-right: 8px;
+}
+
+#test-player
+{
+	position: absolute;
+	left: 510px;
+	top: 150px;
+}
+
+sup
+{
+	color: red;
+}
+
+table.download
+{
+	width: 330px;
+}

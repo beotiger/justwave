@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>JustWave Project / Downloads</title>
+	<link rel="shortcut icon" href="posters/favicon64.ico">
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="js/justwave.player.js"></script>
+	<link type="text/css" rel="stylesheet" href="css/justwave.player.css">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<link type="text/css" rel="stylesheet" href="css/styles.css">
+	
+	<script src="js/demo2.js"></script>
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+         <a class="navbar-brand" href="index.html">JustWave</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="player.html">JustWave Player</a></li>
+            <li><a href="demo1.php">Demo 1</a></li>
+            <li><a href="demo2.php">Demo 2</a></li>
+						<li><a href="test.php">Test</a></li>
+						<li><a href="license.html">License</a></li>
+						<li class="active"><a href="#">Download</a></li>
+						<li><a href="http://beotiger.com">beotiger.com</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+   </nav>
+
+  <div class="container">
+
+		<h1>JustWave Project: Downloads</h1>
+		
+		<div class="alert alert-warning" role="alert">
+			You can download sources at <a href="https://github.com/beotiger/justwave">GitHub</a>	or use one of the following buttons.
+		</div>
+
+		<h2>Production release		</h2>
+		<table class="download table">
+			<tr>
+				<th title="in ZIP format">justwave.zip</th>
+				<td>
+					<form target="_blank" action="http://beotiger.com/download/justwave" method="post">
+						<input type="hidden" name="type" value="zip">
+						<input type="hidden" name="name" value="justwave">
+						<button class="btn btn-sm btn-primary">Download</button>
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<th title="in TARBALL format (tgz) ">justwave.tgz</th>
+				<td>
+					<form target="_blank" action="http://beotiger.com/download/justwave" method="post">
+						<input type="hidden" name="type" value="tgz">
+						<input type="hidden" name="name" value="justwave">
+						<button class="btn btn-sm btn-primary">Download</button>
+					</form>
+				</td>
+			</tr>
+		</table>
+
+		<h3>Files for production release are:</h3>
+		<ol class="list-group">
+			<li class="list-group-item"><strong>JustWave.class.php</strong> - PHP class for creating png waveforms of audio using FFMPEG when needed</li>
+			<li class="list-group-item"><strong>justwave.ajax.php</strong> - helper server script for joining JustWave.class.php with client-side scripts (e.g. justwave.player.js)</li>
+			<li class="list-group-item"><strong>justwave.player-min.js</strong> - client-side script (minified version) for creating waveform-like players on audio elements in HTML page</li>
+			<li class="list-group-item"><strong>justwave.player.css</strong> - CSS file for styling players created by justwave.player.js</li>
+		</ol>
+
+		<h2>Development release</h2>
+		<table class="download table">
+			<tr>
+				<th title="in ZIP format">justwave-dev.zip</th>
+				<td>
+					<form target="_blank" action="http://beotiger.com/download/justwave" method="post">
+						<input type="hidden" name="type" value="zip">
+						<input type="hidden" name="name" value="justwave-dev">
+						<button class="btn btn-sm btn-primary">Download</button>
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<th title="in TARBALL format (tgz) ">justwave-dev.tgz</th>
+				<td>
+					<form target="_blank" action="http://beotiger.com/download/justwave" method="post">
+						<input type="hidden" name="type" value="tgz">
+						<input type="hidden" name="name" value="justwave-dev">
+						<button class="btn btn-sm btn-primary">Download</button>
+					</form>
+				</td>
+			</tr>
+		</table>
+
+		<div class="alert alert-warning" role="alert">
+		Development release contains files which are on <a href="https://github.com/beotiger/justwave"><strong>GitHub</strong></a> but can not be up-to-date. Please use <strong>GitHub</strong> to get latest versions.
+		</div>
+		
+		
+		
+		<div class="well">
+				(c) beotiger Andrey Tzar 2015 AD http://justwave.beotiger.com	https://github.com/beotiger	email: beotiger@gmail.com
+		</div>	
+		
+	</div><!-- //.container -->
+</body>
+</html>
