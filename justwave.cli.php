@@ -14,7 +14,7 @@ if(!$argc)
 $scriptName = array_shift($argv);
 
 print "\n" . $scriptName . ' - PHP command line audio waveform generation.' . "\n";
-print 'Generates waveforms from any media files (audio/video) and outputs them to png/gif/jpg files.' . "\n\n";
+print 'Generates waveforms from any media files (audio/video) and outputs them to png files.' . "\n\n";
 
 // mask is required
 if($argc < 2) {
@@ -85,7 +85,6 @@ Possible options are: (shown their default values):
 	wave_color=#909296 - color of foreground wave in #RRGGBB format.
 	back_color= - color of background in #RRGGBB format.
 		If not set or is empty - transparent then.
-	type=png - type of wave image: png|gif|jpg.
 	wavedir=waves - directory in file system for storing wave image.
 		Note 1: This directory is also used for temporary files
 		during conversion process and should be writable.
