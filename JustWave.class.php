@@ -591,7 +591,7 @@ class JustWave
 	/**
 	 * Create waves' images from audio
 	 *
-	 * @param string $mp3 Path or url to audio file (it may be not only an mp3 file)
+	 * @param string $url Path or url to audio file (it may be not only an mp3 file)
 	*/
 	public function create($url)
 	{
@@ -608,73 +608,32 @@ class JustWave
 			$this->waveColor . $this->progressColor . $this->backgroundColor);
 		
 		// find waves in cache
-		if($this->checkCache()) {
-			@unlink($tempAudioName);
+		if($this->checkCache())
 			return;
-		}
-		// find waves in output dir
-		if($this->waveExists()) {
-			@unlink($tempAudioName);
-			return;
-		}
-		
-		if(filter_var($url, FILTER_VALIDATE_URL)) {
-			// LOG::write('!! Recognized as true URL');
-		// download url and save it locally to waveDir dir
-			$found = false;
-			if(parse_url($this->url, PHP_URL_HOST) == $_SERVER['SERVER_NAME']) {
-				// we have url host the same as host of the script, try to find local path
-				// in order to not download it through network
-				$newpath = dirname($_SERVER['SCRIPT_FILENAME']) . parse_url($this->url, PHP_URL_PATH);
-				if(is_readable($newpath)) {
-					$mp3 = $newpath;
-					// LOG::write('!! Audio found on the server and is ' . $mp3);
-					$found = true;
-				}
-			}
-			
-			if(!$found) {
-				if(!($buff = @file_get_contents($url))) {
-					$this->raiseError('Downloading failed #1');
-					return;
-				}
-				
-				// path to audio
-				$mp3 = $this->waveDir . $this->audio;
-				// LOG::write('!! New audio downloaded from ' . $url . ' to: ' . $mp3);
 
-				if(!@file_put_contents($mp3, $buff)) {
-					$this->raiseError('Downloading failed #2');
-					return;
-				}
-				// we are using temporary audio
-				$tempAudioName = $mp3;
-			}
-			
-		}
-		else
-		// local mode
-			$mp3 = $url;
+		// find waves in output dir
+		if($this->waveExists())
+			return;
+	
+		// let's do some neat cleaning to prevent injection
+		$mp3 = str_replace(array('"','&',"\\"), '', $url);
 
 		// LOG::write('!! We have path to audio as ' . $mp3);
 		
 		// convert audio to WAV PCM using FFMPEG
-		if(!($wav = $this->convert($mp3))) {
-			@unlink($tempAudioName);
+		if(!($wav = $this->convert($mp3)))
 			return;
-		}
+
 		// create waves
 		if(!($this->createWaves($wav))) {
 			@unlink($wav);
-			@unlink($tempAudioName);
 			return;
 		}
 		// Delete temporary files.
 		// Or may be we should use temp directory
 		// in order not to hassle with this?
 		@unlink($wav);
-		@unlink($tempAudioName);
-		
+
 		$this->saveWaves();
 		$this->cache();
 		
