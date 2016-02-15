@@ -322,7 +322,7 @@
 			});
 			
 			// bind play/pause button
-			song.find('.justwave_playpause').click(function(e) {
+			song.find('.justwave_playpause').on('click touchstart', function(e) {
 				e.stopPropagation();
 				e.preventDefault();
 				// target an audio element
