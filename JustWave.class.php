@@ -312,6 +312,8 @@ class JustWave
 		if($this->waveColor != $this->progressColor) {								
 			$this->progressImg = imagecreate($this->width, $this->height);
 			imagecopy($this->progressImg, $this->waveImg, 0, 0, 0, 0, $this->width, $this->height);
+			imagepalettecopy($this->progressImg, $this->waveImg);
+
 			// change waveColor to progressColor
 			$index = imagecolorclosest($this->waveImg, $r, $g, $b);
 			list($r, $g, $b) = JustWave::html2rgb($this->progressColor);
