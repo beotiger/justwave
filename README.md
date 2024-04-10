@@ -100,26 +100,26 @@ Only `audio` data parameter is required, others can fall back to their default v
 
 Otherwise audio will be converted to `WAV` format temporally (using `ffmpeg` external binary) and new waveform images will be created.
 
-In `file mode` these images (or one image if wave_color = prog_color) will be stored in wavedir directory and you get links to them in waveurl and progressurl JSON-parameters, otherwise you get data-url in waveurl and progressurl JSON-parameters and can use it as image sources.
+In `file mode` these images (or one image if wave_color == prog_color) will be stored in wavedir directory and you get links to them in waveurl and progressurl JSON-parameters, otherwise you get data-url in waveurl and progressurl JSON-parameters and can use it as image sources.
 
 If `audio src` is a url it will be temporally downloaded and converted as usual audio.
 
 ### The returning data in JSON format
 
-* status	Status of returning, strings ok or err only. ok means waveforms are ready to be used, err - something went wrong.
-* message	Message describing returning result or error cause more specifically.
+* **status**	Status of returning, strings ok or err only. ok means waveforms are ready to be used, err - something went wrong.
+* **message**	Message describing returning result or error cause more specifically.
 
-    In cache - the waveform data has been fetched from cache.
-    Images exist - waveforms images are located in file system.
-    New wave(s) created - new waveforms has been drawn and are ready.
-    Conversion failed - something went wrong in conversion process.
-    Downloading failed - url could not be downloaded for some reason.
+    * *In cache* - the waveform data has been fetched from cache.
+    * *Images exist* - waveforms images are located in file system.
+    * *New wave(s) created* - new waveforms has been drawn and are ready.
+    * *Conversion failed* - something went wrong in conversion process.
+    * *Downloading failed* - url could not be downloaded for some reason.
 
-* duration	Duration of the audio in seconds (fixed value). Some browsers may fail defining real duration parameter for some CBR mp3 and this can somehow help.
-* key	MD5 key composed from audio url (path) + waveform width and height + colors of waveforms.
-* name	Base name of the audio
-* waveurl	Src for main wave (consists either of data-url of PNG-image or a link to external PNG-image location)
-* progressurl	The same for the progress (second background) wave. For dataurl mode it is defined when wave_color <> prog_color only. In file mode it can be the same as waveurl when these colors are the same.
+* **duration**	Duration of the audio in seconds (fixed value). Some browsers may fail defining real duration parameter for some CBR mp3 and this can somehow help.
+* **key**	MD5 key composed from audio url (path) + waveform width and height + colors of waveforms.
+* **name**	Base name of the audio
+* **waveurl**	Src for main wave (consists either of data-url of PNG-image or a link to external PNG-image location)
+* **progressurl**	The same for the progress (second background) wave. For dataurl mode it is defined when wave_color <> prog_color only. In file mode it can be the same as waveurl when these colors are the same.
 
 ## justwave.cli.php
 
